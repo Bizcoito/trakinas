@@ -2,11 +2,6 @@ import React from 'react';
 
 const BookItem = ({book}) => {
                     // ^ same thing that : const book = props.book;
-  // debugger;
-  // if (book.volumeInfo.imageLinks) {
-  //   const imageUrl = book.volumeInfo.imageLinks.thumbnail;
-  // } else {
-  // }
   const imageUrl = "http://books.google.com/books/content?id=_oG_iTxP1pIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
 
   return (
