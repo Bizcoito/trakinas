@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import BookList from './components/book_list';
+import axios from 'axios';
 
-import App from './components/app';
-import reducers from './reducers';
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+    this.state = {
+      books: []
+    };
+  }
 
-ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+  componentDidMount() {
+    axios.get('https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0')
+      .then(response => {
+        const books = response.data.items
+        this.setState({ books });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="row">
+          <BookList
+            books={this.state.books} />
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App></App>, document.querySelector('.container'));
