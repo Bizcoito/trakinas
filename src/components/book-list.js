@@ -11,7 +11,7 @@ const BookList = (props) => {
   });
 
   return (
-    <ul className="col-md-4 list-group">
+    <ul className="list-group">
       {bookItems}
     </ul>
   );

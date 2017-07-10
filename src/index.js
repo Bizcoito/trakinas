@@ -33,7 +33,16 @@ class App extends Component {
 
     return (
       <div>
-        <SearchBar onSearchTermChange={bookSearch} />
+        <div className="row trakinas-navbar">
+          <div className="input-group">
+            <span className="input-group-addon">
+              <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
+            </span>
+            <SearchBar
+              placeholder="Search"
+              onSearchTermChange={bookSearch} />
+          </div>
+        </div>
         <div className="row">
           <BookList
             books={this.state.books} />
