@@ -1,8 +1,19 @@
 import React from 'react';
 
+const mainThumbnail = (thumbnailInfo) => {
+  let thumbnail = thumbnailInfo;
+  if (!thumbnail) {
+    thumbnail = "http://pix.toile-libre.org/upload/original/1499647888.png";
+  } else {
+    thumbnail = thumbnailInfo.smallThumbnail;
+  }
+
+  return thumbnail;
+};
+
 const BookItem = ({book}) => {
                     // ^ same thing that : const book = props.book;
-  const imageUrl = "http://books.google.com/books/content?id=_oG_iTxP1pIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  const imageUrl = mainThumbnail(book.volumeInfo.imageLinks);
 
   return (
     <div className="book-list media">
