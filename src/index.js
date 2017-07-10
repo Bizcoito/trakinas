@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import BookList from './components/book-list';
@@ -28,7 +29,7 @@ class App extends Component {
   }
 
   render() {
-    const bookSearch = (term) => { this.bookSearch(term); }
+    const bookSearch = _.debounce((term) => { this.bookSearch(term) }, 300);
 
     return (
       <div>
