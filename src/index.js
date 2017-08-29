@@ -19,13 +19,13 @@ class App extends Component {
 
   bookSearch(searchTerm) {
     axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
-      .then(response => {
-        const books = response.data.items
-        this.setState({ books });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+         .then(response => {
+           const books = response.data.items
+           this.setState({ books });
+          })
+         .catch(function (error) {
+           console.log(error);
+          });
   }
 
   render() {
