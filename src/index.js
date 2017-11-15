@@ -9,6 +9,8 @@ import FirebaseManager from './firebase';
 class App extends Component {
   constructor(props) {
     super(props);
+    FirebaseManager.init();
+
     this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes'
     this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
     this.state = {
@@ -16,10 +18,11 @@ class App extends Component {
     };
 
     this.bookSearch('flowers');
-    FirebaseManager.init();
+    FirebaseManager.writeBookData('12hhshax123123d', null, 1);
   }
 
   bookSearch(searchTerm) {
+
     axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
          .then(response => {
            const books = response.data.items

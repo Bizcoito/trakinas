@@ -11,9 +11,15 @@ const config = {
 
 class FirebaseManager {
   static init() {
-    console.log('funfou');
-    console.log(config);
     firebase.initializeApp(config);
+  }
+
+  static writeBookData(googleBooksId, userId, quantity) {
+    firebase.database().ref('books/' + googleBooksId).set({
+      googleBooksId: googleBooksId,
+      userId: userId,
+      quantity : quantity
+    });
   }
 }
 
