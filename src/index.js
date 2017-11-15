@@ -18,7 +18,6 @@ class App extends Component {
     };
 
     this.bookSearch('flowers');
-    FirebaseManager.writeBookData('12hhshax123123d', null, 1);
   }
 
   bookSearch(searchTerm) {
