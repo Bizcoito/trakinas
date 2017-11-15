@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import BookList from './components/book-list';
 import SearchBar from './components/search-bar';
 import axios from 'axios';
+import FirebaseManager from './firebase';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends Component {
     };
 
     this.bookSearch('flowers');
+    FirebaseManager.init();
   }
 
   bookSearch(searchTerm) {
