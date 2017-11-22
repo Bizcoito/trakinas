@@ -1,5 +1,6 @@
 import React from 'react';
 import FirebaseManager from '../firebase-manager';
+import BookActionButton from './book-action-button';
 
 const mainThumbnail = (thumbnailInfo) => {
   let thumbnail = thumbnailInfo;
@@ -13,28 +14,20 @@ const mainThumbnail = (thumbnailInfo) => {
 };
 
 const BookItem = ({book}) => {
-                    // ^ same thing that : const book = props.book;
+                 // ^ same thing that: const book = this.props.book;
+
   const imageUrl = mainThumbnail(book.volumeInfo.imageLinks);
-  const bookData = {
-    userId: null,
-    name: book.volumeInfo.title,
-    thumbnail: imageUrl,
-    description: 'testing description'
-  }
 
   return (
     <div className="book-list media">
       <div className="media-left">
         <img className="media-object" src={imageUrl} />
       </div>
-
       <div className="media-body">
         <div className="media-heading">
           {book.volumeInfo.title}
         </div>
-        <button className="btn btn-info" onClick={ () => FirebaseManager.writeBookData(bookData) }>
-          Adicionar ao acervo
-        </button>
+        <BookActionButton book={book} />
       </div>
     </div>
   );
