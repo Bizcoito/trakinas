@@ -31,9 +31,19 @@ class FirebaseManager {
   }
 
   static readBookData(bookId) {
+    const bookData;
     firebase.database().ref('/books/' + bookId).once('value').then(function(snapshot) {
-      const book = (snapshot.val() || 'deu ruim');
+      bookData = snapshot.val();
     });
+    return bookData;
+  }
+
+  static borrowBook(book) {
+    // emprestar livro significa atualizar a propriedade 'available' para false
+  }
+
+  static returnBook(book) {
+    // devolver livro significa atualizar a propriedade 'available' para true 
   }
 }
 
