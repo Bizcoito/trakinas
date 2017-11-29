@@ -5,7 +5,7 @@ const BookList = (props) => {
   const bookItems = props.books.map((book) => {
     return (
       <BookListItem
-        key={book.etag}
+        key={book.bookId}
         book={book} />
     );
   });

@@ -17,14 +17,29 @@ class App extends Component {
       books: []
     };
 
-    this.bookSearch('flowers');
+    this.setBooks();
+  }
+
+  setBooks() {
+    const response = FirebaseManager.getBooks();
+
+    response.then((firebaseResponse) => {
+      const books = [];
+      const booksObject = firebaseResponse.val();
+
+      Object.keys(booksObject).map((key) => { 
+        booksObject[key].bookId = key;
+        books.push(booksObject[key]);
+      })
+
+      this.setState({ books });
+    })
   }
 
   bookSearch(searchTerm) {
-
     axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
          .then(response => {
-           const books = response.data.items
+           const books = response.data.items;
            this.setState({ books });
           })
          .catch(function (error) {

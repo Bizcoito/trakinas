@@ -15,23 +15,20 @@ class FirebaseManager {
   }
 
   static writeBookData(bookData) {
-    debugger;
     const newBookKey = firebase.database().ref().child('books').push().key;
-    var updates = {};
+    let updates = {};
     updates['/books/' + newBookKey] = bookData;
     firebase.database().ref().update(updates);
   }
 
   static getBooks() {
-    firebase.database().ref('/books')
-      .once("value")
-      .then(function(response) {
-        console.log(response.val());
-      });
+    return firebase.database().ref('/books')
+            .once("value")
+            .then(response => response);
   }
 
   static readBookData(bookId) {
-    const bookData;
+    let bookData;
     firebase.database().ref('/books/' + bookId).once('value').then(function(snapshot) {
       bookData = snapshot.val();
     });
