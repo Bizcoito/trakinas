@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
     FirebaseManager.init();
 
-    this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes'
+    this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes';
     this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
     this.state = {
       books: []
@@ -51,17 +51,19 @@ class App extends Component {
     const bookSearch = _.debounce((term) => { this.bookSearch(term) }, 300);
 
     return (
-      <div>
-        <div className="row trakinas-navbar">
-          <div className="input-group">
-            <span className="input-group-addon">
-              <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
-            </span>
-            <SearchBar
-              placeholder="Search"
-              onSearchTermChange={bookSearch} />
+      <div className="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="row trakinas-navbar">
+            <div className="input-group">
+              <span className="input-group-addon">
+                <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
+              </span>
+              <SearchBar
+                placeholder="Search"
+                onSearchTermChange={bookSearch} />
+            </div>
           </div>
-        </div>
+        </nav>
         <div className="row">
           <BookList
             books={this.state.books} />
