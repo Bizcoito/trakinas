@@ -27,20 +27,20 @@ class FirebaseManager {
             .then(response => response);
   }
 
-  static readBookData(bookId) {
-    let bookData;
-    firebase.database().ref('/books/' + bookId).once('value').then(function(snapshot) {
-      bookData = snapshot.val();
-    });
-    return bookData;
+  static getBookData(bookId) {
+    return firebase.database().ref('/books/' + bookId)
+                   .once('value')
+                   .then(response => response.val());
   }
 
-  static borrowBook(book) {
-    // emprestar livro significa atualizar a propriedade 'available' para false
-  }
+  static updateBookAttribute(book, field, value) {
+    let bookData = book;
+    bookData[field] = value;
+    let updates = {};
+    updates['/books/' + book.bookId] = bookData;
+    firebase.database().ref().update(updates);
 
-  static returnBook(book) {
-    // devolver livro significa atualizar a propriedade 'available' para true 
+    return FirebaseManager.getBookData(bookData.bookId).then(response => response);
   }
 }
 
