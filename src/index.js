@@ -42,7 +42,7 @@ class App extends Component {
            const books = response.data.items;
            this.setState({ books });
           })
-         .catch(function (error) {
+         .catch((error) => {
            console.log(error);
           });
   }
