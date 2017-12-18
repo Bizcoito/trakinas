@@ -23,7 +23,7 @@ class CreateBookForm extends Component {
   }
 
   handleSubmit(event) {
-    alert(`The book ${this.state.name} was created!`);
+    alert(`The book ${this.state.name} was created in the records!`);
     event.preventDefault();
     FirebaseManager.writeBookData(this.state);
   }
@@ -32,7 +32,7 @@ class CreateBookForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label for="book-name">Name:</label>
+          <label htmlFor="book-name">Name:</label>
           <input type="text"
                  className="form-control"
                  id="book-name"
@@ -42,7 +42,7 @@ class CreateBookForm extends Component {
         </div>
 
         <div className="form-group">
-          <label for="book-thumbnail">Thumbnail:</label>
+          <label htmlFor="book-thumbnail">Thumbnail:</label>
           <input type="text"
                  className="form-control"
                  id="book-thumbnail"
@@ -52,7 +52,7 @@ class CreateBookForm extends Component {
         </div>
 
         <div className="form-group">
-          <label for="book-description">Description:</label>
+          <label htmlFor="book-description">Description:</label>
           <input type="text"
                  className="form-control"
                  id="book-description"

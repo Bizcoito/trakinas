@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import BookList from './components/book-list';
 import SearchBar from './components/search-bar';
 import Modal from './components/modal';
+import CreateBookForm from './components/create-book-form';
 import axios from 'axios';
 import FirebaseManager from './firebase-manager';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -73,6 +73,7 @@ class App extends Component {
         <a className="navbar-brand" href="#">
           <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
         </a>
+
         <button className="btn btn-info trakinas-navbar-btn" onClick={this.openModal}>Cadastrar livro</button>
         <form className="form-inline">
           <SearchBar
@@ -100,10 +101,10 @@ class App extends Component {
             isModalOpen={this.state.isModalOpen}
             closeModal={this.closeModal}
             style={modalStyle}>
-
-          <img width="100%" style={{borderRadius: 3}} src="https://source.unsplash.com/random" alt="unsplash"/>
-
+          <h2>Cadastrar Livro</h2>
+          <CreateBookForm />
         </Modal>
+
       </div>
     );
   }
