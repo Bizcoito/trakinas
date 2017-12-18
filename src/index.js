@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import BookList from './components/book-list';
 import SearchBar from './components/search-bar';
+import Modal from './components/modal';
 import axios from 'axios';
 import FirebaseManager from './firebase-manager';
 
@@ -14,10 +15,14 @@ class App extends Component {
     this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes';
     this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
     this.state = {
-      books: []
+      books: [],
+      isModalOpen: false,
+      isInnerModalOpen: false,
     };
 
     this.setBooks();
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   setBooks() {
@@ -33,6 +38,20 @@ class App extends Component {
       })
 
       this.setState({ books });
+    })
+  }
+
+  // close modal (set isModalOpen, true)
+  closeModal() {
+    this.setState({
+      isModalOpen: false
+    })
+  }
+
+  // open modal (set isModalOpen, false)
+  openModal() {
+    this.setState({
+      isModalOpen: true
     })
   }
 
@@ -54,7 +73,7 @@ class App extends Component {
         <a className="navbar-brand" href="#">
           <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
         </a>
-        <button className="btn btn-info trakinas-navbar-btn" href="javascript:void(0)">Cadastrar livro</button>
+        <button className="btn btn-info trakinas-navbar-btn" onClick={this.openModal}>Cadastrar livro</button>
         <form className="form-inline">
           <SearchBar
             placeholder="Search"
@@ -63,6 +82,12 @@ class App extends Component {
       </nav>
     );
 
+    const modalStyle = {
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0,0.5)'
+      }
+    };
+
     return (
       <div className="container">
         {navbarInstance}
@@ -70,6 +95,15 @@ class App extends Component {
           <BookList
             books={this.state.books} />
         </div>
+
+        <Modal
+            isModalOpen={this.state.isModalOpen}
+            closeModal={this.closeModal}
+            style={modalStyle}>
+
+          <img width="100%" style={{borderRadius: 3}} src="https://source.unsplash.com/random" alt="unsplash"/>
+
+        </Modal>
       </div>
     );
   }
