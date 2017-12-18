@@ -27,7 +27,7 @@ class App extends Component {
       const books = [];
       const booksObject = firebaseResponse.val();
 
-      Object.keys(booksObject).map((key) => { 
+      Object.keys(booksObject).map((key) => {
         booksObject[key].bookId = key;
         books.push(booksObject[key]);
       })
@@ -49,21 +49,27 @@ class App extends Component {
 
   render() {
     const bookSearch = _.debounce((term) => { this.bookSearch(term) }, 300);
+    const navbarInstance = (
+      <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
+        <div className="trakinas-logo">
+          <a className="btn" href="#">
+            <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
+          </a>
+          <button className="btn btn-info" href="#">Cadastrar livro</button>
+          <form className="form-inline">
+            <SearchBar
+              placeholder="Search"
+              onSearchTermChange={bookSearch} />
+          </form>
+        </div>
+      </nav>
+    );
 
     return (
       <div className="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="row trakinas-navbar">
-            <div className="input-group">
-              <span className="input-group-addon">
-                <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
-              </span>
-              <SearchBar
-                placeholder="Search"
-                onSearchTermChange={bookSearch} />
-            </div>
-          </div>
-        </nav>
+        {navbarInstance}
+        <div className="row trakinas-navbar">
+        </div>
         <div className="row">
           <BookList
             books={this.state.books} />
