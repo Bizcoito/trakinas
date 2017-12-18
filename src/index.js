@@ -50,26 +50,22 @@ class App extends Component {
   render() {
     const bookSearch = _.debounce((term) => { this.bookSearch(term) }, 300);
     const navbarInstance = (
-      <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-        <div className="trakinas-logo">
-          <a className="btn" href="#">
-            <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
-          </a>
-          <button className="btn btn-info" href="#">Cadastrar livro</button>
-          <form className="form-inline">
-            <SearchBar
-              placeholder="Search"
-              onSearchTermChange={bookSearch} />
-          </form>
-        </div>
+      <nav className="navbar navbar-light bg-faded trakinas-navbar">
+        <a className="navbar-brand" href="#">
+          <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
+        </a>
+        <button className="btn btn-info trakinas-navbar-btn" href="javascript:void(0)">Cadastrar livro</button>
+        <form className="form-inline">
+          <SearchBar
+            placeholder="Search"
+            onSearchTermChange={bookSearch} />
+        </form>
       </nav>
     );
 
     return (
       <div className="container">
         {navbarInstance}
-        <div className="row trakinas-navbar">
-        </div>
         <div className="row">
           <BookList
             books={this.state.books} />

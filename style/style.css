@@ -1,11 +1,13 @@
-.trakinas-logo {
-  display: inline-flex;
-}
 .trakinas-navbar {
+  display: inline-flex;
   margin: 20px;
 }
 
 .trakinas-logo {
   height: 20px;
   width: 20px;
+}
+
+.trakinas-navbar-btn {
+  margin: 0 15px;
 }
