@@ -1,19 +1,19 @@
 import React from 'react';
-import BookListItem from './book-list-item'
+import BookItem from './book-item'
 
 const BookList = (props) => {
   const bookItems = props.books.map((book) => {
     return (
-      <BookListItem
-        key={book.etag}
+      <BookItem
+        key={book.bookId}
         book={book} />
     );
   });
 
   return (
-    <ul className="list-group">
+    <div className="list-group container">
       {bookItems}
-    </ul>
+    </div>
   );
 };
 

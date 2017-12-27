@@ -1,29 +1,20 @@
 import React from 'react';
+import FirebaseManager from '../firebase-manager';
+import BookActionButton from './book-action-button';
 
-const mainThumbnail = (thumbnailInfo) => {
-  let thumbnail = thumbnailInfo;
-  if (!thumbnail) {
-    thumbnail = "http://pix.toile-libre.org/upload/original/1499647888.png";
-  } else {
-    thumbnail = thumbnailInfo.smallThumbnail;
-  }
-
-  return thumbnail;
-};
-
-const BookItem = ({book}) => {
-                    // ^ same thing that : const book = props.book;
-  const imageUrl = mainThumbnail(book.volumeInfo.imageLinks);
+const BookItem = ({ book }) => {
+                 // ^ same thing that: const book = this.props.book;
 
   return (
-    <div className="book-list media">
-      <div className="media-left">
-        <img className="media-object" src={imageUrl} />
+    <div className="list-group-item media row">
+      <div className="media-left book-thumbnail">
+        <img className="media-object" src={book.thumbnail} />
       </div>
-
       <div className="media-body">
         <div className="media-heading">
-          {book.volumeInfo.title}
+          <h4>{book.name}</h4>
+          <p>{book.description}</p>
+          <div><BookActionButton book={book} /></div>
         </div>
       </div>
     </div>
