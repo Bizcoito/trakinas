@@ -6,7 +6,7 @@ const BookItem = ({ book }) => {
                  // ^ same thing that: const book = this.props.book;
 
   return (
-    <div className="book-list media">
+    <div className="list-group-item book-list media">
       <div className="media-left">
         <img className="media-object" src={book.thumbnail} />
       </div>

@@ -1,10 +1,10 @@
 import React from 'react';
-import BookListItem from './book-list-item'
+import BookItem from './book-item'
 
 const BookList = (props) => {
   const bookItems = props.books.map((book) => {
     return (
-      <BookListItem
+      <BookItem
         key={book.bookId}
         book={book} />
     );
