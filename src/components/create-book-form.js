@@ -8,6 +8,7 @@ class CreateBookForm extends Component {
       name: '',
       thumbnail: '',
       description: '',
+      available: true
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);

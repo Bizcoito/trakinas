@@ -16,10 +16,15 @@ class FirebaseManager {
 
   static writeBookData(bookData) {
     const newBookKey = firebase.database().ref().child('books').push().key;
-    let updates = {};
-    updates['/books/' + newBookKey] = bookData;
+    const bookId = { bookId: newBookKey };
+    const firebaseBookData = { ...bookId, ...bookData };
+    const updates = {};
+
+    updates['/books/' + newBookKey] = firebaseBookData;
+
     firebase.database().ref().update(updates);
   }
+
 
   static getBooks() {
     return firebase.database().ref('/books')
