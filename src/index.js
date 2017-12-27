@@ -102,7 +102,7 @@ class App extends Component {
             closeModal={this.closeModal}
             style={modalStyle}>
           <h2>Cadastrar Livro</h2>
-          <CreateBookForm />
+          <CreateBookForm submitCallback={this.closeModal}/>
         </Modal>
 
       </div>

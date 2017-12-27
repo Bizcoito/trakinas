@@ -26,6 +26,7 @@ class CreateBookForm extends Component {
     alert(`The book ${this.state.name} was created in the records!`);
     event.preventDefault();
     FirebaseManager.writeBookData(this.state);
+    this.props.submitCallback();
   }
 
   render() {
