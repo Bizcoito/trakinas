@@ -23,6 +23,7 @@ class App extends Component {
     this.setBooks();
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.handleModalCallback = this.handleModalCallback.bind(this);
   }
 
   setBooks() {
@@ -39,6 +40,11 @@ class App extends Component {
 
       this.setState({ books });
     })
+  }
+
+  handleModalCallback() {
+    this.closeModal();
+    this.setBooks();
   }
 
   // close modal (set isModalOpen, true)
@@ -92,19 +98,18 @@ class App extends Component {
     return (
       <div className="container">
         {navbarInstance}
-        <div className="row">
-          <BookList
-            books={this.state.books} />
-        </div>
+
+        <BookList books={this.state.books} />
+
+        <div className="text-center">Bizcoito Brothers LTDA - 2017/18</div>
 
         <Modal
             isModalOpen={this.state.isModalOpen}
             closeModal={this.closeModal}
             style={modalStyle}>
           <h2>Cadastrar Livro</h2>
-          <CreateBookForm submitCallback={this.closeModal}/>
+          <CreateBookForm submitCallback={this.handleModalCallback} />
         </Modal>
-
       </div>
     );
   }
