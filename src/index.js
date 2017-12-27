@@ -33,10 +33,9 @@ class App extends Component {
       const books = [];
       const booksObject = firebaseResponse.val();
 
-      Object.keys(booksObject).map((key) => {
-        booksObject[key].bookId = key;
-        books.push(booksObject[key]);
-      })
+      firebaseResponse.forEach(function(child) {
+        books.push(child.val());
+      });
 
       this.setState({ books });
     })
