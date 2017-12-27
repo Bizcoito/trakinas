@@ -11,9 +11,9 @@ const BookList = (props) => {
   });
 
   return (
-    <ul className="list-group">
+    <div className="list-group container">
       {bookItems}
-    </ul>
+    </div>
   );
 };
 

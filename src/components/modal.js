@@ -55,12 +55,14 @@ class Modal extends Component {
 
 	// render modal
 	render() {
-		return (<div style={{...this.outerStyle, display: this.props.isModalOpen ? 'block' : 'none'}}>
-  						<div style={this.style.overlay} onClick={this.props.closeModal}></div>
-              <div style={this.style.modal}>
-                  {this.props.children}
-              </div>
-            </div>)
+		return (
+			<div style={{...this.outerStyle, display: this.props.isModalOpen ? 'block' : 'none'}}>
+  			<div style={this.style.overlay} onClick={this.props.closeModal}></div>
+				<div style={this.style.modal}>
+					{this.props.children}
+				</div>
+			</div>
+		)
 	}
 }
 

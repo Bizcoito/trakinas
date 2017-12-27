@@ -101,7 +101,9 @@ class App extends Component {
 
         <BookList books={this.state.books} />
 
-        <div className="text-center">Bizcoito Brothers LTDA - 2017/18</div>
+        <div className="text-center">
+          Bizcoito Brothers LTDA - 2017/18
+        </div>
 
         <Modal
             isModalOpen={this.state.isModalOpen}

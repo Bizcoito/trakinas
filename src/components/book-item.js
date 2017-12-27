@@ -6,23 +6,19 @@ const BookItem = ({ book }) => {
                  // ^ same thing that: const book = this.props.book;
 
   return (
-    <div className="list-group-item book-list media">
-      <div className="media-left">
+    <div className="list-group-item media row">
+      <div className="media-left book-thumbnail">
         <img className="media-object" src={book.thumbnail} />
       </div>
       <div className="media-body">
         <div className="media-heading">
-          {book.name}
-        </div><div className="media-heading">
-          {book.description}
+          <h4>{book.name}</h4>
+          <p>{book.description}</p>
+          <div><BookActionButton book={book} /></div>
         </div>
-        <BookActionButton book={book} />
       </div>
     </div>
   );
 };
 
 export default BookItem;
-// description: "testing description"
-// name: "Flowers and the flower garden"
-// thumbnail: "http://books.google.com/books/conten
