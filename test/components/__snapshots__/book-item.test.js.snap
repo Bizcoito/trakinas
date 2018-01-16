@@ -9,7 +9,7 @@ exports[`BookItem renders correctly 1`] = `
   >
     <img
       className="media-object"
-      src={undefined}
+      src="http://pix.toile-libre.org/upload/original/1499647888.png"
     />
   </div>
   <div
