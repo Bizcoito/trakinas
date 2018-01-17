@@ -1,10 +1,10 @@
 import React from 'react';
-import BookItem from '../../src/components/book-item';
+import BookItem from '../components/book-item';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 
 describe('BookItem', () => {
-  let book = {
+  const book = {
     bookId: '123qwe',
     name: 'Xunda',
     description: 'Damironga',
