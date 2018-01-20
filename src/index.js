@@ -7,6 +7,8 @@ import Modal from './components/modal';
 import CreateBookForm from './components/create-book-form';
 import axios from 'axios';
 import FirebaseManager from './firebase-manager';
+import BooksRepository from './books-repository';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -31,14 +33,18 @@ class App extends Component {
 
     response.then((firebaseResponse) => {
       const books = [];
-      const booksObject = firebaseResponse.val();
 
-      firebaseResponse.forEach(function(child) {
+      firebaseResponse.forEach((child) => {
         books.push(child.val());
       });
 
       this.setState({ books });
     })
+  }
+
+  bookSearch(searchTerm) {
+    const booksPromise = BooksRepository.searchBook(searchTerm);
+    booksPromise.then(books => this.setState({ books }));
   }
 
   handleModalCallback() {
@@ -60,7 +66,7 @@ class App extends Component {
     })
   }
 
-  bookSearch(searchTerm) {
+  googleBooksSearch(searchTerm) {
     axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
          .then(response => {
            const books = response.data.items;

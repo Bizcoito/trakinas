@@ -4,7 +4,6 @@ import BookActionButton from './book-action-button';
 
 const BookItem = ({ book }) => {
                  // ^ same thing that: const book = this.props.book;
-
   return (
     <div className="list-group-item media row">
       <div className="media-left book-thumbnail">

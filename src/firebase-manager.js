@@ -14,6 +14,16 @@ class FirebaseManager {
     firebase.initializeApp(config);
   }
 
+  static updateBookAttribute(book, field, value) {
+    let bookData = book;
+    bookData[field] = value;
+    let updates = {};
+    updates['/books/' + book.bookId] = bookData;
+    firebase.database().ref().update(updates);
+
+    return FirebaseManager.getBookData(bookData.bookId).then(response => response);
+  }
+
   static writeBookData(bookData) {
     const newBookKey = firebase.database().ref().child('books').push().key;
     const bookId = { bookId: newBookKey };
@@ -25,7 +35,6 @@ class FirebaseManager {
     firebase.database().ref().update(updates);
   }
 
-
   static getBooks() {
     return firebase.database().ref('/books')
                    .orderByChild("name")
@@ -34,19 +43,10 @@ class FirebaseManager {
   }
 
   static getBookData(bookId) {
-    return firebase.database().ref('/books/' + bookId)
+    return firebase.database()
+                   .ref('/books/' + bookId)
                    .once('value')
                    .then(response => response.val());
-  }
-
-  static updateBookAttribute(book, field, value) {
-    let bookData = book;
-    bookData[field] = value;
-    let updates = {};
-    updates['/books/' + book.bookId] = bookData;
-    firebase.database().ref().update(updates);
-
-    return FirebaseManager.getBookData(bookData.bookId).then(response => response);
   }
 }
 

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookItem renders correctly 1`] = `
+<div
+  className="list-group-item media row"
+>
+  <div
+    className="media-left book-thumbnail"
+  >
+    <img
+      className="media-object"
+      src="http://pix.toile-libre.org/upload/original/1499647888.png"
+    />
+  </div>
+  <div
+    className="media-body"
+  >
+    <div
+      className="media-heading"
+    >
+      <h4>
+        Xunda
+      </h4>
+      <p>
+        Damironga
+      </p>
+      <div>
+        <button
+          className="btn btn-info"
+          onClick={[Function]}
+        >
+          Devolver
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
