@@ -52,18 +52,12 @@ class App extends Component {
     this.setBooks();
   }
 
-  // close modal (set isModalOpen, true)
   closeModal() {
-    this.setState({
-      isModalOpen: false
-    })
+    this.setState({ isModalOpen: false });
   }
 
-  // open modal (set isModalOpen, false)
   openModal() {
-    this.setState({
-      isModalOpen: true
-    })
+    this.setState({ isModalOpen: true });
   }
 
   googleBooksSearch(searchTerm) {
@@ -78,18 +72,16 @@ class App extends Component {
   }
 
   render() {
-    const bookSearch = _.debounce((term) => { this.bookSearch(term) }, 300);
+    const bookSearch = _.debounce((searchTerm) => { this.bookSearch(searchTerm) }, 300);
     const navbarInstance = (
       <nav className="navbar navbar-light bg-faded trakinas-navbar">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="javascript:void(0)">
           <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
         </a>
 
-        <button className="btn btn-info trakinas-navbar-btn" onClick={this.openModal}>Cadastrar livro</button>
+        <button className="btn btn-info trakinas-navbar-btn" onClick={this.openModal}>New book</button>
         <form className="form-inline">
-          <SearchBar
-            placeholder="Search"
-            onSearchTermChange={bookSearch} />
+          <SearchBar placeholder="Search" onSearchTermChange={bookSearch} />
         </form>
       </nav>
     );
@@ -114,7 +106,7 @@ class App extends Component {
             isModalOpen={this.state.isModalOpen}
             closeModal={this.closeModal}
             style={modalStyle}>
-          <h2>Cadastrar Livro</h2>
+          <h2>New book</h2>
           <CreateBookForm submitCallback={this.handleModalCallback} />
         </Modal>
       </div>

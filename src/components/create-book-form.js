@@ -67,7 +67,7 @@ class CreateBookForm extends Component {
         </div>
 
         <button type="submit" className="btn btn-primary" value="Submit">
-          Cadastrar
+          Save book
         </button>
       </form>
     );

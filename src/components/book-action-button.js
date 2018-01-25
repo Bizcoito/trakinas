@@ -3,7 +3,7 @@ import FirebaseManager from '../firebase-manager';
 
 class BookActionButton extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = { book: props.book };
     this.onButtonClick = this.onButtonClick.bind(this);
   }
@@ -21,7 +21,7 @@ class BookActionButton extends Component {
   render() {
     return (
      <button className="btn btn-info" onClick={this.onButtonClick}>
-       {this.state.book.available ? 'Pegar emprestado' : 'Devolver'}
+       {this.state.book.available ? 'Borrow book' : 'Return book'}
      </button>
    );
  };

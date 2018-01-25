@@ -17,17 +17,16 @@ class Modal extends Component {
 			position: 'fixed',
 			top: 0,
 			left: 0,
-			width: "100%",
-			height: "100%",
-			overflow: "auto",
-			height: "100%",
+			width: '100%',
+			height: '100%',
+			overflow: 'auto',
+			height: '100%',
 			zIndex: 1
 		};
 
-		// default style
 		this.style = {
 			modal: {
-				position: "relative",
+				position: 'relative',
 				width: 500,
 				padding: 20,
 				boxSizing: 'border-box',
@@ -45,15 +44,14 @@ class Modal extends Component {
 				bottom: 0,
 				left: 0,
 				right: 0,
-				width: "100%",
-				height: "100%",
+				width: '100%',
+				height: '100%',
 				backgroundColor: 'rgba(0,0,0,0.5)',
 				...this.props.style.overlay
 			}
 		}
 	}
 
-	// render modal
 	render() {
 		return (
 			<div style={{...this.outerStyle, display: this.props.isModalOpen ? 'block' : 'none'}}>

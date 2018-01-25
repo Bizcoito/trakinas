@@ -5,15 +5,14 @@ class BooksRepository {
     const booksPromise = FirebaseManager.getBooks();
     const books = [];
     let searchResults = [];
+    let searchTermRegexp;
 
     return booksPromise.then((firebaseResponse) => {
-      firebaseResponse.forEach((child) => {
-        books.push(child.val());
-      });
+      firebaseResponse.forEach(child => { books.push(child.val()); });
 
       searchResults = books.filter((book) => {
-        const term = new RegExp(searchTerm, 'i');
-        return book.name.match(term) || book.description.match(term);
+        searchTermRegexp = new RegExp(searchTerm, 'i');
+        return book.name.match(searchTermRegexp) || book.description.match(searchTermRegexp);
       });
 
       return searchResults;
