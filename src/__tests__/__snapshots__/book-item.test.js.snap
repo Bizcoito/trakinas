@@ -29,7 +29,7 @@ exports[`BookItem renders correctly 1`] = `
           className="btn btn-info"
           onClick={[Function]}
         >
-          Devolver
+          Return book
         </button>
       </div>
     </div>
