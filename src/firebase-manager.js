@@ -31,6 +31,13 @@ class FirebaseManager {
     return FirebaseManager.getBookData(bookData.bookId).then(response => response);
   }
 
+  static getBooks() {
+    return firebase.database().ref('/books')
+      .orderByChild('name')
+      .once('value')
+      .then(response => response);
+  }
+
   static getBookData(bookId) {
     return firebase.database()
       .ref('/books/' + bookId)
