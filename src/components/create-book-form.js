@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FirebaseManager from '../firebase-manager';
+import BooksRepository from '../books-repository';
 
 class CreateBookForm extends Component {
   constructor(props) {
@@ -26,7 +27,11 @@ class CreateBookForm extends Component {
   handleSubmit(event) {
     alert(`The book ${this.state.name} was created in the records!`);
     event.preventDefault();
-    FirebaseManager.writeBookData(this.state);
+
+    const dbInterface = new FirebaseManager;
+    const booksRepository = new BooksRepository(dbInterface);
+    booksRepository.createBook(this.state);
+
     this.props.submitCallback();
   }
 

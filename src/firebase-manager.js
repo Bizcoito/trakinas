@@ -31,7 +31,14 @@ class FirebaseManager {
     return FirebaseManager.getBookData(bookData.bookId).then(response => response);
   }
 
-  static writeBookData(bookData) {
+  static getBookData(bookId) {
+    return firebase.database()
+      .ref('/books/' + bookId)
+      .once('value')
+      .then(response => response.val());
+  }
+
+  createBook(bookData) {
     const newBookKey = firebase.database().ref().child('books').push().key;
     const bookId = { bookId: newBookKey };
     const firebaseBookData = { ...bookId, ...bookData };
@@ -42,22 +49,11 @@ class FirebaseManager {
     firebase.database().ref().update(updates);
   }
 
-  static getBooks() {
+  getBooks() {
     return firebase.database().ref('/books')
       .orderByChild('name')
       .once('value')
       .then(response => response);
-  }
-
-  static getBookData(bookId) {
-    return firebase.database()
-      .ref('/books/' + bookId)
-      .once('value')
-      .then(response => response.val());
-  }
-
-  getBooks() {
-    return FirebaseManager.getBooks();
   }
 
   searchBook(searchTerm) {
