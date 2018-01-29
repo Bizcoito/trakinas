@@ -5,14 +5,30 @@ class databaseInterface {
     this.books = books;
   }
 
-  init() { };
-
   createBook(book) {
+    if (!book['id']) {
+      book['id'] = Math.floor(Math.random() * 100);
+    }
     this.books.push(book);
   }
 
   getBooks() {
     return Promise.resolve(this.books);
+  }
+
+  getBook(bookId) {
+    let foundBook;
+
+    this.books.forEach(book => {
+      if (book['id'] === bookId) {
+        foundBook = book;
+      }
+    });
+
+    if (!foundBook) {
+      return Promise.reject({ error: 'Book not found' });
+    }
+    return Promise.resolve(foundBook);
   }
 
   searchBook(searchTerm) {
@@ -24,7 +40,7 @@ class databaseInterface {
       return book.name.match(searchTermRegexp) || book.description.match(searchTermRegexp);
     });
 
-    return searchResults;
+    return Promise.resolve(searchResults);
   }
 }
 
@@ -102,10 +118,55 @@ describe('BooksRepository', () => {
     const booksRepository = new BooksRepository(dbInterface);
 
     it('search for term in book name or description', () => {
-      expect(booksRepository.searchBook('Clean')).toHaveLength(2);
-      expect(booksRepository.searchBook('Bob')).toHaveLength(2);
-      expect(booksRepository.searchBook('Architecture')).toHaveLength(1);
-      expect(booksRepository.searchBook('Popcorn')).toHaveLength(0);
+      booksRepository.searchBook('Clean').then((books) => {
+        expect(books).toHaveLength(2);
+      })
+      booksRepository.searchBook('Bob').then((books) => {
+        expect(books).toHaveLength(2);
+      })
+      booksRepository.searchBook('Architecture').then((books) => {
+        expect(books).toHaveLength(1);
+      })
+      booksRepository.searchBook('Popcorn').then((books) => {
+        expect(books).toHaveLength(0);
+      });
+    });
+  });
+
+  describe('getBook', () => {
+    const bookId = 'qwer';
+    let bookTemp;
+    const books = [
+      {
+        id: 'asdf',
+        name: 'Clean Architecture',
+        description: "A nice uncle bob's book",
+      },
+      {
+        id: bookId,
+        name: 'Clean Code',
+        description: "An older uncle bob's book",
+      }
+    ];
+    const dbInterface = new databaseInterface(books);
+    const booksRepository = new BooksRepository(dbInterface);
+
+    beforeEach(() => {
+      bookTemp = 'qwer';
+    });
+
+    it('finds the book by id', (cb) => {
+      booksRepository.getBook(bookTemp).then(book => {
+        expect(book).toEqual(books[1]);
+        cb();
+      });
+    });
+
+    describe('when there is no book with the book id', (cb) => {
+      expect.assertions(1);
+      return expect(booksRepository.getBook('not a valid id')).rejects.toEqual({
+        error: 'Book not found',
+      });
     });
   });
 });

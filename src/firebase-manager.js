@@ -45,6 +45,13 @@ class FirebaseManager {
       .then(response => response.val());
   }
 
+  getBook(bookId) {
+    return firebase.database()
+      .ref('/books/' + bookId)
+      .once('value')
+      .then(response => response.val());
+  }
+
   createBook(bookData) {
     const newBookKey = firebase.database().ref().child('books').push().key;
     const bookId = { bookId: newBookKey };
