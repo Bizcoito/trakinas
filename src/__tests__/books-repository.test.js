@@ -12,7 +12,7 @@ class databaseInterface {
   }
 
   getBooks() {
-    return this.books;
+    return Promise.resolve(this.books);
   }
 
   searchBook(searchTerm) {
@@ -30,8 +30,8 @@ class databaseInterface {
 
 describe('BooksRepository', () => {
   describe('createBook', () => {
-    const dbInterface = new databaseInterface;
-    const booksRepository = new BooksRepository(dbInterface);
+    let dbInterface = new databaseInterface;
+    let booksRepository = new BooksRepository(dbInterface);
 
     describe('throws an exception if any parameter is wrong', () => {
       it('when book is not an Object', () => {
@@ -69,13 +69,19 @@ describe('BooksRepository', () => {
       thumbnail: 'http://blog.coachseye.com/wp-content/themes/anew/img/thumb-small.png',
     }
 
+
     it('creates it through its database interface', () => {
-      const originalBooksLength = booksRepository.getBooks().length;
+      /**
+       * Initializing the dbInterface and booksRepository again to be sure that the book instance
+       * returned is not an existing book on the database.
+       */
+      let dbInterface = new databaseInterface;
+      let booksRepository = new BooksRepository(dbInterface);
 
       booksRepository.createBook(book);
-
-      const newBooksLength = booksRepository.getBooks().length;
-      expect(newBooksLength).toEqual(originalBooksLength + 1);
+      booksRepository.getBooks().then((books) => {
+        expect(books[0]).toEqual(book);
+      })
     });
   });
 
