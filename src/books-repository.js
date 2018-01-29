@@ -1,8 +1,23 @@
+
 class BooksRepository {
+  /**
+  * Creates an instance of BooksRepository.
+  *
+  * @param {any} databaseInterface
+  */
   constructor(databaseInterface) {
     this.db = databaseInterface;
   }
 
+  /**
+   * Function that creates a book on the database
+   *
+   * @param {Object} book
+   * @property {string} book.name
+   * @property {string} book.description
+   * @property {string} book.thumbnail
+   * @return nothing
+   */
   createBook(book) {
     if (typeof book !== 'object') {
       throw new TypeError('Book should be an Object.');
@@ -17,13 +32,25 @@ class BooksRepository {
 
   /**
    * Function that returns all books.
-   *
-   * @return {Promise} with all the books Objects
+   * @return {Promise<Array<Object>>}
+   * @property {string} name
+   * @property {string} description
+   * @property {string} thumbnail
    */
   getBooks() {
     return this.db.getBooks();
   }
 
+  /**
+   * Function that search books with the given search term on their names or descriptions.
+   *
+   * @param {string} searchTerm The word to search for.
+   *
+   * @return {Promise<Array<Object>>}
+   * @property {string} name
+   * @property {string} description
+   * @property {string} thumbnail
+   */
   searchBook(searchTerm) {
     return this.db.searchBook(searchTerm);
   }
