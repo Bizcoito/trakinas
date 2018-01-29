@@ -1,22 +1,31 @@
-import FirebaseManager from './firebase-manager';
-
 class BooksRepository {
-  static searchBook(searchTerm) {
-    const booksPromise = FirebaseManager.getBooks();
-    const books = [];
-    let searchResults = [];
-    let searchTermRegexp;
+  constructor(databaseInterface) {
+    this.db = databaseInterface;
+  }
 
-    return booksPromise.then((firebaseResponse) => {
-      firebaseResponse.forEach(child => { books.push(child.val()); });
+  createBook(book) {
+    if (typeof book !== 'object') {
+      throw new TypeError('Book should be an Object.');
+    }
 
-      searchResults = books.filter((book) => {
-        searchTermRegexp = new RegExp(searchTerm, 'i');
-        return book.name.match(searchTermRegexp) || book.description.match(searchTermRegexp);
-      });
+    if (typeof book.name !== 'string') {
+      throw new TypeError('Book Object must have a name parameter with type String.');
+    }
 
-      return searchResults;
-    });
+    this.db.createBook(book);
+  }
+
+  /**
+   * Function that returns all books.
+   *
+   * @return {Promise} with all the books Objects
+   */
+  getBooks() {
+    return this.db.getBooks();
+  }
+
+  searchBook(searchTerm) {
+    return this.db.searchBook(searchTerm);
   }
 }
 

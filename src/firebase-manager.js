@@ -10,6 +10,12 @@ const config = {
 };
 
 class FirebaseManager {
+  constructor() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
+  }
+
   static init() {
     firebase.initializeApp(config);
   }
@@ -38,16 +44,38 @@ class FirebaseManager {
 
   static getBooks() {
     return firebase.database().ref('/books')
-                   .orderByChild('name')
-                   .once('value')
-                   .then(response => response);
+      .orderByChild('name')
+      .once('value')
+      .then(response => response);
   }
 
   static getBookData(bookId) {
     return firebase.database()
-                   .ref('/books/' + bookId)
-                   .once('value')
-                   .then(response => response.val());
+      .ref('/books/' + bookId)
+      .once('value')
+      .then(response => response.val());
+  }
+
+  getBooks() {
+    return FirebaseManager.getBooks();
+  }
+
+  searchBook(searchTerm) {
+    const booksPromise = this.getBooks();
+    const books = [];
+    let searchResults = [];
+    let searchTermRegexp;
+
+    return booksPromise.then((firebaseResponse) => {
+      firebaseResponse.forEach(child => { books.push(child.val()); });
+
+      searchResults = books.filter((book) => {
+        searchTermRegexp = new RegExp(searchTerm, 'i');
+        return book.name.match(searchTermRegexp) || book.description.match(searchTermRegexp);
+      });
+
+      return searchResults;
+    });
   }
 }
 

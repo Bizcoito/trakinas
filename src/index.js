@@ -43,7 +43,9 @@ class App extends Component {
   }
 
   bookSearch(searchTerm) {
-    const booksPromise = BooksRepository.searchBook(searchTerm);
+    const dbInterface = new FirebaseManager;
+    const booksRepository = new BooksRepository(dbInterface);
+    const booksPromise = booksRepository.searchBook(searchTerm);
     booksPromise.then(books => this.setState({ books }));
   }
 
