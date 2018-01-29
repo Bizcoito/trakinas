@@ -64,13 +64,13 @@ class App extends Component {
 
   googleBooksSearch(searchTerm) {
     axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
-         .then(response => {
-           const books = response.data.items;
-           this.setState({ books });
-          })
-         .catch((error) => {
-           console.log(error);
-          });
+      .then(response => {
+        const books = response.data.items;
+        this.setState({ books });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -105,9 +105,9 @@ class App extends Component {
         </div>
 
         <Modal
-            isModalOpen={this.state.isModalOpen}
-            closeModal={this.closeModal}
-            style={modalStyle}>
+          isModalOpen={this.state.isModalOpen}
+          closeModal={this.closeModal}
+          style={modalStyle}>
           <h2>New book</h2>
           <CreateBookForm submitCallback={this.handleModalCallback} />
         </Modal>
