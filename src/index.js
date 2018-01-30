@@ -29,7 +29,9 @@ class App extends Component {
   }
 
   setBooks() {
-    const response = FirebaseManager.getBooks();
+    const dbInterface = new FirebaseManager;
+    const booksRepository = new BooksRepository(dbInterface);
+    const response = booksRepository.getBooks();
 
     response.then((firebaseResponse) => {
       const books = [];
