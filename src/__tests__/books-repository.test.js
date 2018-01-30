@@ -33,6 +33,7 @@ describe('BooksRepository', () => {
   describe('createBook', () => {
     let dbInterface = new databaseInterface;
     let booksRepository = new BooksRepository(dbInterface);
+    const thumbnailUrl = 'http://blog.coachseye.com/wp-content/themes/anew/img/thumb-small.png';
 
     describe('throws an exception if any parameter is wrong', () => {
       it('when book is not an Object', () => {
@@ -45,7 +46,7 @@ describe('BooksRepository', () => {
       it('when name is missing', () => {
         const book = {
           description: 'some description',
-          thumbnail: 'http://blog.coachseye.com/wp-content/themes/anew/img/thumb-small.png',
+          thumbnail: thumbnailUrl,
         }
         const expectedError = new TypeError('Book Object must have a name parameter with type String.');
 
@@ -56,7 +57,7 @@ describe('BooksRepository', () => {
         const book = {
           name: 123,
           description: 'some description',
-          thumbnail: 'http://blog.coachseye.com/wp-content/themes/anew/img/thumb-small.png',
+          thumbnail: thumbnailUrl,
         }
         const expectedError = new TypeError('Book Object must have a name parameter with type String.');
 
@@ -67,7 +68,7 @@ describe('BooksRepository', () => {
     const book = {
       name: 'Some book',
       description: 'Some description',
-      thumbnail: 'http://blog.coachseye.com/wp-content/themes/anew/img/thumb-small.png',
+      thumbnail: thumbnailUrl,
     }
 
 
