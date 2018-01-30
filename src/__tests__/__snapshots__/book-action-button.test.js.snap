@@ -5,6 +5,6 @@ exports[`BookActionButton renders correctly 1`] = `
   className="btn btn-info"
   onClick={[Function]}
 >
-  Pegar emprestado
+  Borrow book
 </button>
 `;

@@ -21,7 +21,7 @@ class BookActionButton extends Component {
   render() {
     return (
       <button className="btn btn-info" onClick={this.onButtonClick}>
-        {this.state.book.available ? 'Pegar emprestado' : 'Return book'}
+        {this.state.book.available ? 'Borrow book' : 'Return book'}
       </button>
     );
   };
