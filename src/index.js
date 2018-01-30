@@ -13,7 +13,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     FirebaseManager.init();
+    const dbInterface = new FirebaseManager;
 
+    this.booksRepository = new BooksRepository(dbInterface);
     this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes';
     this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
     this.state = {
@@ -29,9 +31,7 @@ class App extends Component {
   }
 
   setBooks() {
-    const dbInterface = new FirebaseManager;
-    const booksRepository = new BooksRepository(dbInterface);
-    const response = booksRepository.getBooks();
+    const response = this.booksRepository.getBooks();
 
     response.then((firebaseResponse) => {
       const books = [];
@@ -45,9 +45,7 @@ class App extends Component {
   }
 
   bookSearch(searchTerm) {
-    const dbInterface = new FirebaseManager;
-    const booksRepository = new BooksRepository(dbInterface);
-    const booksPromise = booksRepository.searchBook(searchTerm);
+    const booksPromise = this.booksRepository.searchBook(searchTerm);
     booksPromise.then(books => this.setState({ books }));
   }
 
