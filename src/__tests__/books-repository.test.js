@@ -16,21 +16,6 @@ class databaseInterface {
     return Promise.resolve(this.books);
   }
 
-  getBook(bookId) {
-    let foundBook;
-
-    this.books.forEach(book => {
-      if (book['id'] === bookId) {
-        foundBook = book;
-      }
-    });
-
-    if (!foundBook) {
-      return Promise.reject({ error: 'Book not found' });
-    }
-    return Promise.resolve(foundBook);
-  }
-
   searchBook(searchTerm) {
     let searchResults = [];
     let searchTermRegexp;
@@ -129,43 +114,6 @@ describe('BooksRepository', () => {
       })
       booksRepository.searchBook('Popcorn').then((books) => {
         expect(books).toHaveLength(0);
-      });
-    });
-  });
-
-  describe('getBook', () => {
-    const bookId = 'qwer';
-    let bookTemp;
-    const books = [
-      {
-        id: 'asdf',
-        name: 'Clean Architecture',
-        description: "A nice uncle bob's book",
-      },
-      {
-        id: bookId,
-        name: 'Clean Code',
-        description: "An older uncle bob's book",
-      }
-    ];
-    const dbInterface = new databaseInterface(books);
-    const booksRepository = new BooksRepository(dbInterface);
-
-    beforeEach(() => {
-      bookTemp = 'qwer';
-    });
-
-    it('finds the book by id', (cb) => {
-      booksRepository.getBook(bookTemp).then(book => {
-        expect(book).toEqual(books[1]);
-        cb();
-      });
-    });
-
-    describe('when there is no book with the book id', (cb) => {
-      expect.assertions(1);
-      return expect(booksRepository.getBook('not a valid id')).rejects.toEqual({
-        error: 'Book not found',
       });
     });
   });

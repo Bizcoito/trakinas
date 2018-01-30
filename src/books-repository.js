@@ -42,18 +42,6 @@ class BooksRepository {
   }
 
   /**
-   * Function that returns all books.
-   * @param {string} bookId
-   * @return {Promise<Object>}
-   * @property {string} name
-   * @property {string} description
-   * @property {string} thumbnail
-   */
-  getBook(bookId) {
-    return this.db.getBook(bookId);
-  }
-
-  /**
    * Function that search books with the given search term on their names or descriptions.
    *
    * @param {string} searchTerm The word to search for.
