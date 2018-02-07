@@ -13,7 +13,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     FirebaseManager.init();
+    const dbInterface = new FirebaseManager;
 
+    this.booksRepository = new BooksRepository(dbInterface);
     this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes';
     this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
     this.state = {
@@ -29,7 +31,7 @@ class App extends Component {
   }
 
   setBooks() {
-    const response = FirebaseManager.getBooks();
+    const response = this.booksRepository.getBooks();
 
     response.then((firebaseResponse) => {
       const books = [];
@@ -43,7 +45,7 @@ class App extends Component {
   }
 
   bookSearch(searchTerm) {
-    const booksPromise = BooksRepository.searchBook(searchTerm);
+    const booksPromise = this.booksRepository.searchBook(searchTerm);
     booksPromise.then(books => this.setState({ books }));
   }
 
@@ -62,13 +64,13 @@ class App extends Component {
 
   googleBooksSearch(searchTerm) {
     axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
-         .then(response => {
-           const books = response.data.items;
-           this.setState({ books });
-          })
-         .catch((error) => {
-           console.log(error);
-          });
+      .then(response => {
+        const books = response.data.items;
+        this.setState({ books });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -103,9 +105,9 @@ class App extends Component {
         </div>
 
         <Modal
-            isModalOpen={this.state.isModalOpen}
-            closeModal={this.closeModal}
-            style={modalStyle}>
+          isModalOpen={this.state.isModalOpen}
+          closeModal={this.closeModal}
+          style={modalStyle}>
           <h2>New book</h2>
           <CreateBookForm submitCallback={this.handleModalCallback} />
         </Modal>
