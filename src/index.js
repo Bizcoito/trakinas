@@ -77,25 +77,26 @@ class App extends Component {
   render() {
     const bookSearch = _.debounce((searchTerm) => { this.bookSearch(searchTerm) }, 300);
     const navbarInstance = (
-      <nav className="navbar navbar-light bg-faded trakinas-navbar">
-        <a className="navbar-brand" href="javascript:void(0)">
+      <div className="row fake-navbar">
+        <div className="col-3">
           <img className="trakinas-logo" src="https://avatars3.githubusercontent.com/u/29185183?s=200&v=4" />
-        </a>
+          <button className="btn btn-info trakinas-navbar-btn"
+            onClick={() => { this.toggleModal('AddBookManually', true) }}>
+            New book
+          </button>
+        </div>
 
-        <button className="btn btn-info trakinas-navbar-btn"
-          onClick={() => { this.toggleModal('AddBookManually', true) }}>
-          New book
-        </button>
+        <div className="col-3">
+          <button className="btn btn-info trakinas-navbar-btn"
+            onClick={() => { this.toggleModal('GoogleBooksAdd', true) }}>
+            New book from Google
+          </button>
+        </div>
 
-        <button className="btn btn-info trakinas-navbar-btn"
-          onClick={() => { this.toggleModal('GoogleBooksAdd', true) }}>
-          New book from Google
-        </button>
-
-        <form className="form-inline">
+        <div className="col-6">
           <SearchBar placeholder="Search" onSearchTermChange={bookSearch} />
-        </form>
-      </nav>
+        </div>
+      </div>
     );
 
     const modalStyle = {
