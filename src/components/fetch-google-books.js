@@ -9,6 +9,11 @@ class FetchGoogleBooks extends Component {
     super();
     this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes';
     this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
+    this.booksFallback = {
+      name: '',
+      description: 'This book has not description',
+      thumbnail: 'https://user-images.githubusercontent.com/6999140/35893855-ebd1eac6-0b7d-11e8-8019-83faf67bcb72.png',
+    }
     this.state = {
       books: []
     }
@@ -16,14 +21,17 @@ class FetchGoogleBooks extends Component {
 
   parseGoogleBooksItems(books) {
     let googleBook;
+    let thumbnail;
 
     return books.map(book => {
       googleBook = book.volumeInfo;
+      thumbnail = googleBook.imageLinks ? googleBook.imageLinks.thumbnail : this.booksFallback.thumbnail;
+
       return {
         bookId: book.etag,
-        name: googleBook.title,
-        description: googleBook.description,
-        thumbnail: googleBook.imageLinks.thumbnail,
+        name: googleBook.title || this.booksFallback.name,
+        description: googleBook.description || this.booksFallback.description,
+        thumbnail: thumbnail,
         action: 'save'
       }
     })
@@ -43,7 +51,8 @@ class FetchGoogleBooks extends Component {
     const googleBooksPromise = this.googleBooksSearch(searchTerm);
 
     googleBooksPromise.then(googleBooks => {
-      const books = this.parseGoogleBooksItems(googleBooks);
+      let books = [];
+      if (googleBooks) books = this.parseGoogleBooksItems(googleBooks);
 
       this.setState({ books });
     });
