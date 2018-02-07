@@ -12,7 +12,9 @@ import FetchGoogleBooks from './components/fetch-google-books';
 class App extends Component {
   constructor(props) {
     super(props);
-    FirebaseManager.init();
+    const dbInterface = new FirebaseManager;
+
+    this.booksRepository = new BooksRepository(dbInterface);
     this.state = {
       books: [],
       isModalOpenAddBookManually: false,
@@ -31,7 +33,7 @@ class App extends Component {
   }
 
   setBooks() {
-    const response = FirebaseManager.getBooks();
+    const response = this.booksRepository.getBooks();
 
     response.then((firebaseResponse) => {
       const books = [];
@@ -48,7 +50,7 @@ class App extends Component {
   }
 
   bookSearch(searchTerm) {
-    const booksPromise = BooksRepository.searchBook(searchTerm);
+    const booksPromise = this.booksRepository.searchBook(searchTerm);
     let books;
 
     booksPromise.then(firebaseBooks => {
@@ -77,16 +79,16 @@ class App extends Component {
     const navbarInstance = (
       <nav className="navbar navbar-light bg-faded trakinas-navbar">
         <a className="navbar-brand" href="javascript:void(0)">
-          <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
+          <img className="trakinas-logo" src="https://avatars3.githubusercontent.com/u/29185183?s=200&v=4" />
         </a>
 
         <button className="btn btn-info trakinas-navbar-btn"
-                onClick={ () => { this.toggleModal('AddBookManually', true)} }>
+          onClick={() => { this.toggleModal('AddBookManually', true) }}>
           New book
         </button>
 
         <button className="btn btn-info trakinas-navbar-btn"
-                onClick={ () => { this.toggleModal('GoogleBooksAdd', true)} }>
+          onClick={() => { this.toggleModal('GoogleBooksAdd', true) }}>
           New book from Google
         </button>
 
@@ -113,18 +115,18 @@ class App extends Component {
         </div>
 
         <Modal
-            id="add-book-manually"
-            isModalOpen={this.state.isModalOpenAddBookManually}
-            closeModal={ () => { this.toggleModal('AddBookManually', false) } }
-            style={modalStyle}>
+          id="add-book-manually"
+          isModalOpen={this.state.isModalOpenAddBookManually}
+          closeModal={() => { this.toggleModal('AddBookManually', false) }}
+          style={modalStyle}>
           <h2>New book</h2>
           <CreateBookForm submitCallback={this.handleModalCallback} />
         </Modal>
         <Modal
-            id="google-books-add"
-            isModalOpen={this.state.isModalOpenGoogleBooksAdd}
-            closeModal={ () => { this.toggleModal('GoogleBooksAdd', false) } }
-            style={modalStyle}>
+          id="google-books-add"
+          isModalOpen={this.state.isModalOpenGoogleBooksAdd}
+          closeModal={() => { this.toggleModal('GoogleBooksAdd', false) }}
+          style={modalStyle}>
           <h2>Google Books</h2>
           <FetchGoogleBooks />
         </Modal>

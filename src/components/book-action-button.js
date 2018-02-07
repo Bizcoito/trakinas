@@ -33,11 +33,11 @@ class BookActionButton extends Component {
 
   render() {
     return (
-     <button className="btn btn-info" onClick={this.onButtonClick}>
+      <button className="btn btn-info" onClick={this.onButtonClick}>
         {BookActionButton.getAction(this.state.book.action)}
-     </button>
-   );
- };
+      </button>
+    );
+  };
 }
 
 export default BookActionButton;

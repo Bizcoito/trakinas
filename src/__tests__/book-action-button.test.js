@@ -16,8 +16,8 @@ describe('BookActionButton', () => {
   }
 
   const bookLiteralStates = {
-    available: 'Pegar emprestado',
-    rented: 'Devolver',
+    available: 'Borrow book',
+    rented: 'Return book',
   }
 
   it('renders correctly', () => {
