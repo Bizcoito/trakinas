@@ -5,17 +5,23 @@ class BookActionButton extends Component {
   constructor(props) {
     super(props);
     this.state = { book: props.book };
-
-    this.onButtonClick = this.onButtonClick.bind(this);
-  }
-
-  static getAction(action) {
-    const actions = {
+    this.buttonActionsNames = {
       borrow: 'Borrow book',
       return: 'Return book',
       save: 'Save book'
     }
-    return actions[action];
+
+    this.buttonClassesNames = {
+      borrow: 'btn btn-info',
+      return: 'btn btn-warning',
+      save: 'btn btn-info'
+    }
+
+    this.onButtonClick = this.onButtonClick.bind(this);
+  }
+
+  getAction(action) {
+    return this.buttonActionsNames[action];
   }
 
   updateAvailableAttribute(status) {
@@ -31,10 +37,16 @@ class BookActionButton extends Component {
     this.updateAvailableAttribute(!this.state.book.available);
   }
 
+
+  buttonClass() {
+    const actionName = this.state.book.action;
+    return this.buttonClassesNames[actionName];
+  }
+
   render() {
     return (
-      <button className="btn btn-info" onClick={this.onButtonClick}>
-        {BookActionButton.getAction(this.state.book.action)}
+      <button className={this.buttonClass()} onClick={this.onButtonClick}>
+        {this.getAction(this.state.book.action)}
       </button>
     );
   };
