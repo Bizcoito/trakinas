@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 
 class Modal extends Component {
-	static propTypes = {
-		isModalOpen: React.PropTypes.bool.isRequired,
-		closeModal: React.PropTypes.func.isRequired,
-		style: React.PropTypes.shape({
-			modal: React.PropTypes.object,
-			overlay: React.PropTypes.object
-		})
-	};
-
 	constructor(props) {
 		super(props);
 

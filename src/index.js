@@ -5,29 +5,31 @@ import BookList from './components/book-list';
 import SearchBar from './components/search-bar';
 import Modal from './components/modal';
 import CreateBookForm from './components/create-book-form';
-import axios from 'axios';
 import FirebaseManager from './firebase-manager';
 import BooksRepository from './books-repository';
+import FetchGoogleBooks from './components/fetch-google-books';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    FirebaseManager.init();
     const dbInterface = new FirebaseManager;
 
     this.booksRepository = new BooksRepository(dbInterface);
-    this.googleBooksEndpoint = 'https://www.googleapis.com/books/v1/volumes';
-    this.googleApiKey = 'AIzaSyCdJvgLdKZHXr_59YEyRv4H1z1La2uzvk0';
     this.state = {
       books: [],
-      isModalOpen: false,
-      isInnerModalOpen: false,
+      isModalOpenAddBookManually: false,
+      isModalOpenGoogleBooksAdd: false,
     };
-
     this.setBooks();
-    this.closeModal = this.closeModal.bind(this);
-    this.openModal = this.openModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.handleModalCallback = this.handleModalCallback.bind(this);
+  }
+
+  setBookAction(book) {
+    return {
+      ...book,
+      action: book.available ? 'borrow' : 'return'
+    }
   }
 
   setBooks() {
@@ -35,10 +37,13 @@ class App extends Component {
 
     response.then((firebaseResponse) => {
       const books = [];
+      let book;
 
       firebaseResponse.forEach((child) => {
-        books.push(child.val());
+        book = this.setBookAction(child.val());
+        books.push(book);
       });
+
 
       this.setState({ books });
     })
@@ -46,7 +51,15 @@ class App extends Component {
 
   bookSearch(searchTerm) {
     const booksPromise = this.booksRepository.searchBook(searchTerm);
-    booksPromise.then(books => this.setState({ books }));
+    let books;
+
+    booksPromise.then(firebaseBooks => {
+      books = firebaseBooks.map((book) => {
+        return this.setBookAction(book);
+      });
+
+      this.setState({ books })
+    });
   }
 
   handleModalCallback() {
@@ -54,23 +67,11 @@ class App extends Component {
     this.setBooks();
   }
 
-  closeModal() {
-    this.setState({ isModalOpen: false });
-  }
-
-  openModal() {
-    this.setState({ isModalOpen: true });
-  }
-
-  googleBooksSearch(searchTerm) {
-    axios.get(`${this.googleBooksEndpoint}?q=${searchTerm}&key=${this.googleApiKey}`)
-      .then(response => {
-        const books = response.data.items;
-        this.setState({ books });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  toggleModal(identifier, visibilityState) {
+    const modal = `isModalOpen${identifier}`;
+    const state = {};
+    state[modal] = visibilityState;
+    this.setState(state);
   }
 
   render() {
@@ -78,10 +79,19 @@ class App extends Component {
     const navbarInstance = (
       <nav className="navbar navbar-light bg-faded trakinas-navbar">
         <a className="navbar-brand" href="javascript:void(0)">
-          <img className="trakinas-logo" src="http://icon-icons.com/icons2/529/PNG/128/Cake_with_biscuit_1_icon-icons.com_52568.png" />
+          <img className="trakinas-logo" src="https://avatars3.githubusercontent.com/u/29185183?s=200&v=4" />
         </a>
 
-        <button className="btn btn-info trakinas-navbar-btn" onClick={this.openModal}>New book</button>
+        <button className="btn btn-info trakinas-navbar-btn"
+          onClick={() => { this.toggleModal('AddBookManually', true) }}>
+          New book
+        </button>
+
+        <button className="btn btn-info trakinas-navbar-btn"
+          onClick={() => { this.toggleModal('GoogleBooksAdd', true) }}>
+          New book from Google
+        </button>
+
         <form className="form-inline">
           <SearchBar placeholder="Search" onSearchTermChange={bookSearch} />
         </form>
@@ -105,11 +115,20 @@ class App extends Component {
         </div>
 
         <Modal
-          isModalOpen={this.state.isModalOpen}
-          closeModal={this.closeModal}
+          id="add-book-manually"
+          isModalOpen={this.state.isModalOpenAddBookManually}
+          closeModal={() => { this.toggleModal('AddBookManually', false) }}
           style={modalStyle}>
           <h2>New book</h2>
           <CreateBookForm submitCallback={this.handleModalCallback} />
+        </Modal>
+        <Modal
+          id="google-books-add"
+          isModalOpen={this.state.isModalOpenGoogleBooksAdd}
+          closeModal={() => { this.toggleModal('GoogleBooksAdd', false) }}
+          style={modalStyle}>
+          <h2>Google Books</h2>
+          <FetchGoogleBooks />
         </Modal>
       </div>
     );
